@@ -1,13 +1,13 @@
+import 'dart:async';
 import 'dart:math';
 import 'dart:ui';
-import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'story_video.dart';
-import 'story_image.dart';
 
 import '../controller/story_controller.dart';
 import '../utils.dart';
+import 'story_image.dart';
+import 'story_video.dart';
 
 /// Indicates where the progress indicators should be placed.
 enum ProgressPosition { top, bottom }
@@ -386,6 +386,8 @@ class StoryView extends StatefulWidget {
   /// Should the story be repeated forever?
   final bool repeat;
 
+  bool pauseOnFirst = true;
+
   /// If you would like to display the story as full-page, then set this to
   /// `false`. But in case you would display this as part of a page (eg. in
   /// a [ListView] or [Column]) then set this to `true`.
@@ -532,7 +534,13 @@ class StoryViewState extends State<StoryView> with TickerProviderStateMixin {
     _currentAnimation =
         Tween(begin: 0.0, end: 1.0).animate(_animationController);
 
-    widget.controller.play();
+    if (widget.pauseOnFirst) {
+      widget.pauseOnFirst = false;
+      widget.controller.play();
+      widget.controller.pause();
+    } else {
+      widget.controller.play();
+    }
   }
 
   void _beginPlay() {
