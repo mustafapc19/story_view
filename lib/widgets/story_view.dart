@@ -396,6 +396,7 @@ class StoryView extends StatefulWidget {
   // Controls the playback of the stories
   final StoryController controller;
 
+  final replyButton;
   StoryView({
     @required this.storyItems,
     @required this.controller,
@@ -404,6 +405,7 @@ class StoryView extends StatefulWidget {
     this.progressPosition = ProgressPosition.top,
     this.repeat = false,
     this.inline = false,
+    this.replyButton,
     this.onVerticalSwipeComplete,
   })  : assert(storyItems != null && storyItems.length > 0,
             "[storyItems] should not be null or empty"),
@@ -711,6 +713,7 @@ class StoryViewState extends State<StoryView> with TickerProviderStateMixin {
                 }),
                 width: 70),
           ),
+          (widget.replyButton != null) ? widget.replyButton : SizedBox()
         ],
       ),
     );
